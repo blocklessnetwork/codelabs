@@ -14,23 +14,27 @@ function createStubFolder(title) {
   return title.toLowerCase().replace(/\s+/g, '-');
 }
 
-function createCodelabJson(stubFolder, title, duration, summary) {
-  const codelabData = {
-    environment: 'web',
-    format: 'html',
-    // Add other properties as needed
-    title,
-    duration,
-    summary,
-  };
+function createCodelabMd(stubFolder, title, duration, summary) {
+  const codelabData = `
+author: Blockless Team
+summary: ${summary}
+id: ${stubFolder}
+categories: codelab,markdown
+environments: Web
+status: Published
+feedback link: https://www.github.com/blocklessnetwork/b7s
+analytics account: UA-123
 
-  const codelabJsonPath = path.join(codelabsDir, stubFolder, 'codelab.json');
+# ${title}
+`;
 
-  fs.writeFile(codelabJsonPath, JSON.stringify(codelabData, null, 2), (err) => {
+  const codelabMdPath = path.join(codelabsDir, stubFolder, 'codelab.md');
+
+  fs.writeFile(codelabMdPath, codelabData, (err) => {
     if (err) {
-      console.error('Error writing to codelab.json:', err);
+      console.error('Error writing to codelab.md:', err);
     } else {
-      console.log(`codelab.json created and placed in '${stubFolder}' folder.`);
+      console.log(`codelab.md created and placed in '${stubFolder}' folder.`);
     }
     rl.close();
   });
@@ -47,7 +51,7 @@ rl.question('Enter the title of the codelab: ', (title) => {
         fs.mkdirSync(codelabFolderPath, { recursive: true });
       }
 
-      createCodelabJson(stubFolder, title, duration, summary);
+      createCodelabMd(stubFolder, title, duration, summary);
     });
   });
 });
