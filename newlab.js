@@ -1,6 +1,7 @@
 const readline = require('readline');
 const fs = require('fs');
 const path = require('path');
+const pkg = require('./package.json');
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -16,14 +17,14 @@ function createStubFolder(title) {
 
 function createCodelabMd(stubFolder, title, duration, summary) {
   const codelabData = `
-author: Blockless Team
+author: ${pkg.codelab.author}
 summary: ${summary}
 id: ${stubFolder}
 categories: codelab,markdown
 environments: Web
 status: Published
-feedback link: https://www.github.com/blocklessnetwork/b7s
-analytics account: UA-123
+feedback link: ${pkg.codelab['feedback-url']}
+analytics account: ${pkg.codelab['ga-analytics']}
 
 # ${title}
 `;

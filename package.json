@@ -6,9 +6,15 @@
 
   "scripts": {
     "build": "./build.sh && node gen.js",
+    "update": "node update.js",
     "serve": "node server.js",
     "new": "node newlab.js",
     "postinstall": "go install github.com/googlecodelabs/tools/claat@latest"
+  },
+  "codelab" :{
+    "author": "Blockless Team",
+    "ga-analytics": "UA-123",
+    "feedback-url": "https://www.github.com/blocklessnetwork/b7s"
   },
   "author": "",
   "license": "ISC",
