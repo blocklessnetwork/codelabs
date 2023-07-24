@@ -5,7 +5,8 @@
   "main": "index.js",
 
   "scripts": {
-    "build": "./build.sh && node gen.js",
+    "clean": "rm -rf public",
+    "build": "yarn clean && ./build.sh && node gen.js",
     "update": "node update.js",
     "serve": "node server.js",
     "new": "node newlab.js",
