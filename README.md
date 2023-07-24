@@ -52,3 +52,9 @@ Make sure you have Go (Golang) installed before running the above command.
 ### Create a New Code Lab
 
 issuing the `npm run new` command will start the process of creating a new codelab that will appear in `labs/title-stub` for editing
+
+### Running Preview While Editing
+
+```
+npm run start
+```
