@@ -9,49 +9,11 @@ analytics account: UA-123
 
 # Getting Started
 
-## Section 1
+## Installing the CLI
 Duration: 0:10:00
 
-### Info Boxes
+## Using the SDK
+Duration: 0:10:00
 
-Plain Text followed by green and yellow info boxes
-
-Negative
-: This will appear in a yellow info box.
-
-Positive
-: This will appear in a green info box.
-
-You created info boxes!
-
-### Bullets
-
-Plain Text followed by bullets
-
-- Hello
-- CodeLab
-- World
-
-You created bullets!
-
-### Numbered List
-
-1. List
-1. Using
-1. Numbers
-
-You created a numbered list!
-
-
-## Section 2
-Duration: 0:05:00
-
-### Add a Link
-Adding a link!
-[Example of a Link](https://www.google.com)
-
-### Add an Image
-Adding an image!
-
-### Embed an iframe
-![https://codepen.io/tzoght/embed/yRNZaP](https://en.wikipedia.org/wiki/File:Example.jpg "Try Me Publisher")
+## Using the Dashboard
+Duration: 0:10:00

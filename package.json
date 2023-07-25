@@ -10,7 +10,7 @@
     "serve": "node server.js",
     "new": "node newlab.js",
     "start": "concurrently \"cd public && claat serve\" \"yarn watch\"",
-    "watch": "nodemon --exec \"yarn build\" --ignore \"public/\" --watch \"labs/\" -e md",
+    "watch": "nodemon --exec \"yarn build\" --ignore \"public/\" --watch \"labs/\" -e md,json",
     "postinstall": "go install github.com/googlecodelabs/tools/claat@latest"
   },
   "codelab": {

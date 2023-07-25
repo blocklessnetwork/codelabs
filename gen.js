@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const distFolderPath = './public'; // The path to the directory containing randomly named directories
+const labsFolderPath = './labs'; // The path to the directory where codelabOrder.json will be stored
 
 // Read the directories in the './dist' folder
 fs.readdir(distFolderPath, { withFileTypes: true }, (err, directoryEntries) => {
@@ -11,10 +12,26 @@ fs.readdir(distFolderPath, { withFileTypes: true }, (err, directoryEntries) => {
   }
 
   // Filter only directories
-  const directories = directoryEntries.filter(entry => entry.isDirectory()).map(entry => entry.name);
+  let directories = directoryEntries.filter(entry => entry.isDirectory()).map(entry => entry.name);
 
-  // Generate HTML content for each codelab.json file in each directory
-  const htmlContent = directories.map(directory => {
+  // Get the curated order of directories from 'codelabOrder.json'
+  const codelabOrderJsonPath = path.join(labsFolderPath, 'codelabOrder.json');
+  let codelabOrder = [];
+  if (fs.existsSync(codelabOrderJsonPath)) {
+    codelabOrder = require(path.resolve(codelabOrderJsonPath));
+  } else {
+    console.warn('codelabOrder.json not found. A default codelabOrder.json will be created with the existing directory names.');
+    codelabOrder = [...directories];
+    fs.writeFileSync(codelabOrderJsonPath, JSON.stringify(codelabOrder, null, 2));
+  }
+
+  // Generate HTML content for each codelab.json file in each directory, in the order specified in 'codelabOrder.json'
+  const htmlContent = codelabOrder.map(directory => {
+    if (!directories.includes(directory)) {
+      console.warn(`Directory not found: ${directory}`);
+      return '';
+    }
+
     const codelabJsonPath = path.join(distFolderPath, directory, 'codelab.json');
     if (!fs.existsSync(codelabJsonPath)) {
       console.warn(`codelab.json not found in directory: ${directory}`);
