@@ -21,7 +21,6 @@ Duration: 0:10:00
 
 ## Step 1: Pull the Latest b7s Docker Image
 
-
     docker pull ghcr.io/blocklessnetwork/b7s:v0.0.25
 
 ## Step 2: Run the Node in the Head Node Configuration
