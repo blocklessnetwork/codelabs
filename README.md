@@ -58,3 +58,7 @@ issuing the `npm run new` command will start the process of creating a new codel
 ```
 npm run start
 ```
+
+### Modify Ordering of Codelabs
+
+`labs/codelabsOrder.json` can be edited to change the generation order for the landing page.
