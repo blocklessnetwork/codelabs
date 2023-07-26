@@ -66,6 +66,8 @@ This will give you both repositories, and prepare the system for building releas
 
 To connect to the network, we need to prepare the networking agent that is written with golang. 
 
+From inside the `b7s` agent directory, execute the following command
+
 ```bash
 make
 ```
@@ -75,6 +77,15 @@ The go compiler will build for the current system as it's target.
 * `dist/b7s-keygen` : generates crypto keys
 * `dist/b7s-manager` : out of process manager connects using P2P keys
 
+### Building the Runtime using Rust
+
+To execute WASM files, we need to provide the Networking Agent with a runtime. Our offically supported runtime.
+
+The compiler will target the current system as the build target. Inside the `runtime` directory execute the following command.
+
+```bash
+cargo build
+```
 ## Run the Node in the Head Node Configuration (Bare Metal)
 
 If you prefer running the b7s node directly on your machine without using Docker, follow the instructions below:
