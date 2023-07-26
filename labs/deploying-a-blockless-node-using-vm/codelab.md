@@ -24,11 +24,24 @@ You should have a recent version of MacOS, Linux or Windows. A Dual Core Machine
 
 The latest version of the `b7s` agent, can be found on github. Choose a prebuilt for the Operating System and Processor Type you are deploying to.
 
+### Downloading using the Browser
+
 * [b7s v0.0.25](https://github.com/blocklessnetwork/b7s/releases/tag/v0.0.25)
 
 The latest version of the runtime can be found on github. 
 
 * [runtime v0.0.15](https://github.com/blocklessnetwork/runtime/releases/tag/v0.0.15)
+
+## Installing a Prebuilt Binary
+
+The installation is pretty simple. Place the binaries in a directory that the user account you plan to use to run the binary agent, has access to execute within. 
+
+Often placing them in `~/blockless` is enough. Ensure that the agents have been `chmod +x` on your system.
+
+```bash
+chmod +x b7s
+chmod +x blockless-cli
+```
 
 ## Building the b7s Agent from Source
 
@@ -37,6 +50,30 @@ To build the `b7s` repository you will need, you will also need to follow the `I
 * git
 * golang 1.19 [install](https://go.dev/doc/install)
 * cargo 1.70.0  [install](https://doc.rust-lang.org/cargo/getting-started/installation.html)
+
+### Clone the Git Repo
+
+Clone the git repos, starting from a blank diretory
+
+```bash
+git clone git@github.com:blocklessnetwork/b7s.git
+git clone git@github.com:blocklessnetwork/runtime.git
+```
+
+This will give you both repositories, and prepare the system for building releases.
+
+### Building the Go Agent
+
+To connect to the network, we need to prepare the networking agent that is written with golang. 
+
+```bash
+make
+```
+The go compiler will build for the current system as it's target.
+
+* `dist/b7s` : the agent binary
+* `dist/b7s-keygen` : generates crypto keys
+* `dist/b7s-manager` : out of process manager connects using P2P keys
 
 ## Run the Node in the Head Node Configuration (Bare Metal)
 
