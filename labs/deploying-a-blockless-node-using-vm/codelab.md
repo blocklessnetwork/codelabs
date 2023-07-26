@@ -84,9 +84,23 @@ To execute WASM files, we need to provide the Networking Agent with a runtime. O
 The compiler will target the current system as the build target. Inside the `runtime` directory execute the following command.
 
 ```bash
-cargo build
+cargo build --release
 ```
-## Run the Node in the Head Node Configuration (Bare Metal)
+
+The release will now be available under `target/release/blockless-cli`.
+
+## Installing source built Binaries
+
+
+## Configuration and Setup
+
+Configuration and setup is pretty simple. Most of the configuration is passed in during runtime. Before we are able to launch the agent, we need to prepare a private/pubic key pair using the `keygen`.
+
+The command is straight forward, `outpath` is optional, if omitted the keygen will place keys in `CWD`. (current command path)
+
+`./bls-keygen [outpath]`
+
+## Run the Node in the Head Node Configuration
 
 If you prefer running the b7s node directly on your machine without using Docker, follow the instructions below:
 
@@ -104,3 +118,5 @@ If you prefer running the b7s node directly on your machine without using Docker
     fi
 
 Make sure to set the environment variables like `P2P_PORT`, `REST_API`, `dialback_args`, `bootnode_args`, and replace `$NODE_KEY_PATH` and `$WORKSPACE_ROOT` with appropriate paths for your setup.
+
+## Run the Node in the Worker Node Configuration
