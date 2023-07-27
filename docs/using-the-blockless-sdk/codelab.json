@@ -1,0 +1,26 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2023-07-21T23:40:38Z",
+  "id": "using-the-blockless-sdk",
+  "duration": 10,
+  "title": "Using The Blockless SDK",
+  "summary": "Learn how to use the Blockless SDK to build applications quickly.",
+  "source": "./labs/using-the-blockless-sdk/codelab.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "codelab",
+    "markdown"
+  ],
+  "tags": [
+    "web"
+  ],
+  "feedback": "https://www.github.com/blocklessnetwork/b7s",
+  "ga": "UA-123",
+  "url": "using-the-blockless-sdk"
+}

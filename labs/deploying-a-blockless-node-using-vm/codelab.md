@@ -89,7 +89,7 @@ Here is an example of how we would accomplish this if we built the binaries from
 
 ```bash
 mkdir ~/bls
-cp b7s/dist/b7s ~/bls 
+cp b7s/dist/b7s* ~/bls 
 cp runtime/target/release/blockless-cli ~/bls
 chmod -R 755 ~/bls
 ```
@@ -104,17 +104,65 @@ chmod -R 755 ~/bls
 
 Configuration and setup is pretty simple. Most of the configuration is passed in during runtime. Before we are able to launch the agent, we need to prepare a private/pubic key pair using the `keygen`.
 
-The command is straight forward, `outpath` is optional, if omitted the keygen will place keys in `CWD`. (current command path)
+The keygen will place keys in `cwd`. (current working directory)
 
-`./bls-keygen [outpath]`
+`./bls-keygen`
+
+Using `~/bls` as the install path from the prior step, an example would look like.
+
+```bash
+cd ~/bls
+mkdir identity
+cd identity
+../b7s-keygen
+```
+
+**It's good practice to backup this keypair, this will identify your node on the network, for all future transactions**
 
 ## Run the Node in the Head Node Configuration
 
 To run the `b7s` agent in `Head Node` configuration.
 
+Set the required environment variables:
+
+- P2P_PORT: This variable defines the port number for peer-to-peer communication. You can set it to any available port number.
 ```bash
-./b7s --peer-db /var/tmp/b7s/peerdb \
-      --function-db /var/tmp/b7s/function-db \
+export P2P_PORT=5000
+```
+- REST_API: This variable determines the port number for the REST API. Choose an available port number for this purpose. If not provided, RPC will be disabled. 
+
+```bash
+export REST_API=8080
+```
+- $NODE_KEY_PATH: This is the path to your private key. Replace $NODE_KEY_PATH with the actual path. For instance:
+
+```bash
+export NODE_KEY_PATH=~/b7s/identity/priv.bin
+```
+
+- $WORKSPACE_ROOT: This variable represents the root directory of your workspace. Replace $WORKSPACE_ROOT with the actual path. For example:
+
+```bash
+export WORKSPACE_ROOT=~/b7s/workspace
+```
+
+- $PEER_DB: This variable represents the location to save the P2P Peer Registration Database.
+
+```bash
+export PEER_DB=~/b7s/function-db
+```
+
+- $FUNCTION_DB: This variable represents the location to save the Function Deployment Database.
+
+```bash
+export FUNCTION_DB=~/b7s/function-db
+```
+
+Execute the `b7s` agent using the options. 
+
+```bash
+./b7s --peer-db $PEER_DB \
+      --function-db $FUNCTION_DB \
       --log-level debug \
       --port $P2P_PORT \
       --role head \
@@ -123,22 +171,61 @@ To run the `b7s` agent in `Head Node` configuration.
       --rest-api :$REST_API $dialback_args $bootnode_args
 ```
 
-Make sure to set the environment variables like `P2P_PORT`, `REST_API`, `dialback_args`, `bootnode_args`, and replace `$NODE_KEY_PATH` and `$WORKSPACE_ROOT` with appropriate paths for your setup.
+Make sure to set the environment variables like `P2P_PORT`,`REST_API`, `dialback_args`, `bootnode_args`, and replace `$NODE_KEY_PATH` and `$WORKSPACE_ROOT` with appropriate paths for your setup.
 
 ## Run the Node in the Worker Node Configuration
 
+
+Set the required environment variables:
+
+- P2P_PORT: This variable defines the port number for peer-to-peer communication. You can set it to any available port number.
 ```bash
-./b7s --peer-db /var/tmp/b7s/peerdb \
-      --function-db /var/tmp/b7s/function-db \
+export P2P_PORT=5000
+```
+- REST_API: This variable determines the port number for the REST API. Choose an available port number for this purpose. If not provided, RPC will be disabled. 
+
+```bash
+export REST_API=8080
+```
+- $NODE_KEY_PATH: This is the path to your private key. Replace $NODE_KEY_PATH with the actual path. For instance:
+
+```bash
+export NODE_KEY_PATH=~/b7s/identity/priv.bin
+```
+
+- $WORKSPACE_ROOT: This variable represents the root directory of your workspace. Replace $WORKSPACE_ROOT with the actual path. For example:
+
+```bash
+export WORKSPACE_ROOT=~/b7s/workspace
+```
+
+- $PEER_DB: This variable represents the location to save the P2P Peer Registration Database.
+
+```bash
+export PEER_DB=~/b7s/function-db
+```
+
+- $FUNCTION_DB: This variable represents the location to save the Function Deployment Database.
+
+```bash
+export FUNCTION_DB=~/b7s/function-db
+```
+
+Execute the `b7s` agent using the options. 
+
+```bash
+./b7s --peer-db $PEER_DB \
+      --function-db $FUNCTION_DB \
       --log-level debug \
       --port $P2P_PORT \
       --role worker \
       --workspace $WORKSPACE_ROOT \
       --private-key $NODE_KEY_PATH \
-      --rest-api :$REST_API $dialback_args $bootnode_args
+      --rest-api :$REST_API 
+      $dialback_args $bootnode_args
 ```
 
-Make sure to set the environment variables like `P2P_PORT`, `REST_API`, `dialback_args`, `bootnode_args`, and replace `$NODE_KEY_PATH` and `$WORKSPACE_ROOT` with appropriate paths for your setup.
+Make sure to set the environment variables like `P2P_PORT` `REST_API`, `dialback_args`, `bootnode_args`, and replace `$NODE_KEY_PATH` and `$WORKSPACE_ROOT` with appropriate paths for your setup.
 
 ## Common Problems
 

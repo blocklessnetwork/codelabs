@@ -6,7 +6,7 @@ const fastify = require('fastify')({
   
   // Serve static files from the 'dist' directory
   fastify.register(staticServe, {
-    root: path.join(__dirname, 'public'),
+    root: path.join(__dirname, 'docs'),
     prefix: '/', // optional: default '/'
   });
   

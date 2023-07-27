@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const distFolderPath = './public'; // The path to the directory containing randomly named directories
+const distFolderPath = './docs'; // The path to the directory containing randomly named directories
 const labsFolderPath = './labs'; // The path to the directory where codelabOrder.json will be stored
 
 // Read the directories in the './dist' folder

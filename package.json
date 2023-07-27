@@ -4,13 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "clean": "rm -rf public",
+    "clean": "rm -rf docs",
     "build": "./build.sh && node gen.js",
     "update": "node update.js",
     "serve": "node server.js",
     "new": "node newlab.js",
-    "start": "concurrently \"cd public && claat serve\" \"yarn watch\"",
-    "watch": "nodemon --exec \"yarn build\" --ignore \"public/\" --watch \"labs/\" -e md,json",
+    "start": "concurrently \"cd docs && claat serve\" \"yarn watch\"",
+    "watch": "nodemon --exec \"yarn build\" --ignore \"docs/\" --watch \"labs/\" -e md,json",
     "postinstall": "go install github.com/googlecodelabs/tools/claat@latest"
   },
   "codelab": {

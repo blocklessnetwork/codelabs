@@ -2,7 +2,7 @@
 
 # Assuming the labs directory is in the same directory as this script
 labs_dir="./labs"
-output_dir="public"
+output_dir="docs"
 
 # Check if the labs directory exists
 if [ ! -d "$labs_dir" ]; then

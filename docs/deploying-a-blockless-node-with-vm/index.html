@@ -1,0 +1,238 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Deploying using a Virtual Machine or on Bare Metal</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14" ga4id=""></google-codelab-analytics>
+  <google-codelab codelab-gaid="UA-123"
+                  codelab-ga4id=""
+                  id="deploying-a-blockless-node-with-vm"
+                  title="Deploying using a Virtual Machine or on Bare Metal"
+                  environment="web"
+                  feedback-link="https://www.github.com/blocklessnetwork/b7s">
+    
+      <google-codelab-step label="Obtaining the b7s Binary" duration="0">
+        <p>You have multiple choices to obtain the binary for b7s. You can:</p>
+<ul>
+<li><a href="./#2" target="_self">Build the b7s agent from source</a></li>
+<li><a href="./#1" target="_self">Download a prebuilt binary</a></li>
+</ul>
+<p>You should have a recent version of MacOS, Linux or Windows. A Dual Core Machine, and 1Gb of Spare Ram, and at least 512Mb of Disk Space.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Downloading a Prebuilt Binary" duration="0">
+        <p>The latest version of the <code>b7s</code> agent, can be found on github. Choose a prebuilt for the Operating System and Processor Type you are deploying to.</p>
+<h2 is-upgraded>Downloading using the Browser</h2>
+<ul>
+<li><a href="https://github.com/blocklessnetwork/b7s/releases/tag/v0.0.25" target="_blank">b7s v0.0.25</a></li>
+</ul>
+<p>The latest version of the runtime can be found on github.</p>
+<ul>
+<li><a href="https://github.com/blocklessnetwork/runtime/releases/tag/v0.0.15" target="_blank">runtime v0.0.15</a></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Building the b7s Agent from Source" duration="0">
+        <p>To build the <code>b7s</code> repository you will need, you will also need to follow the <a href="./#3" target="_self">Installing Binaries</a> step.</p>
+<ul>
+<li>git</li>
+<li>golang 1.19 <a href="https://go.dev/doc/install" target="_blank">install</a></li>
+<li>cargo 1.70.0  <a href="https://doc.rust-lang.org/cargo/getting-started/installation.html" target="_blank">install</a></li>
+</ul>
+<h2 is-upgraded>Clone the Git Repo</h2>
+<p>Clone the git repos, starting from a blank diretory</p>
+<pre><code language="language-bash" class="language-bash">git clone git@github.com:blocklessnetwork/b7s.git
+git clone git@github.com:blocklessnetwork/runtime.git
+</code></pre>
+<p>This will give you both repositories, and prepare the system for building releases.</p>
+<h2 is-upgraded>Building the Go Agent</h2>
+<p>To connect to the network, we need to prepare the networking agent that is written with golang.</p>
+<p>From inside the <code>b7s</code> agent directory, execute the following command</p>
+<pre><code language="language-bash" class="language-bash">make
+</code></pre>
+<p>The go compiler will build for the current system as it&#39;s target.</p>
+<ul>
+<li><code>dist/b7s</code> : the agent binary</li>
+<li><code>dist/b7s-keygen</code> : generates crypto keys</li>
+<li><code>dist/b7s-manager</code> : out of process manager connects using P2P keys</li>
+</ul>
+<h2 is-upgraded>Building the Runtime using Rust</h2>
+<p>To execute WASM files, we need to provide the Networking Agent with a runtime. Our offically supported runtime.</p>
+<p>The compiler will target the current system as the build target. Inside the <code>runtime</code> directory execute the following command.</p>
+<pre><code language="language-bash" class="language-bash">cargo build --release
+</code></pre>
+<p>The release will now be available under <code>target/release/blockless-cli</code>.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Installing Binaries" duration="0">
+        <p>Pick a location to move the binary files. This directory should be write, and execution accessible to the user who will be issuing the processes.</p>
+<ul>
+<li>We recommend you use a normal user and not <code>root</code>.</li>
+<li>We recommend this folder is <code>chmod 755</code>, so only the user running the agent process and runtime have access to write to the folder.</li>
+</ul>
+<p>Here is an example of how we would accomplish this if we built the binaries from source.</p>
+<pre><code language="language-bash" class="language-bash">mkdir ~/bls
+cp b7s/dist/b7s* ~/bls 
+cp runtime/target/release/blockless-cli ~/bls
+chmod -R 755 ~/bls
+</code></pre>
+<ul>
+<li><code>~/bls</code> directory was created</li>
+<li>we copied <code>b7s</code> and <code>blockless-cli</code> into <code>~/bls</code></li>
+<li>we ensured the user can execute and write to the directory</li>
+</ul>
+<p><strong>if you downloaded zip files, substitute the paths for the folder in which you decompressed the archives. ~/Downloads/b7s-os.arch</strong></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Configuration and Setup" duration="0">
+        <p>Configuration and setup is pretty simple. Most of the configuration is passed in during runtime. Before we are able to launch the agent, we need to prepare a private/pubic key pair using the <code>keygen</code>.</p>
+<p>The keygen will place keys in <code>cwd</code>. (current working directory)</p>
+<p><code>./bls-keygen</code></p>
+<p>Using <code>~/bls</code> as the install path from the prior step, an example would look like.</p>
+<pre><code language="language-bash" class="language-bash">cd ~/bls
+mkdir identity
+cd identity
+../b7s-keygen
+</code></pre>
+<p><strong>It&#39;s good practice to backup this keypair, this will identify your node on the network, for all future transactions</strong></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Run the Node in the Head Node Configuration" duration="0">
+        <p>To run the <code>b7s</code> agent in <code>Head Node</code> configuration.</p>
+<p>Set the required environment variables:</p>
+<ul>
+<li>P2P_PORT: This variable defines the port number for peer-to-peer communication. You can set it to any available port number.</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">export P2P_PORT=5000
+</code></pre>
+<ul>
+<li>REST_API: This variable determines the port number for the REST API. Choose an available port number for this purpose. If not provided, RPC will be disabled.</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">export REST_API=8080
+</code></pre>
+<ul>
+<li>$NODE_KEY_PATH: This is the path to your private key. Replace $NODE_KEY_PATH with the actual path. For instance:</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">export NODE_KEY_PATH=~/b7s/identity/priv.bin
+</code></pre>
+<ul>
+<li>$WORKSPACE_ROOT: This variable represents the root directory of your workspace. Replace $WORKSPACE_ROOT with the actual path. For example:</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">export WORKSPACE_ROOT=~/b7s/workspace
+</code></pre>
+<ul>
+<li>$PEER_DB: This variable represents the location to save the P2P Peer Registration Database.</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">export PEER_DB=~/b7s/function-db
+</code></pre>
+<ul>
+<li>$FUNCTION_DB: This variable represents the location to save the Function Deployment Database.</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">export FUNCTION_DB=~/b7s/function-db
+</code></pre>
+<p>Execute the <code>b7s</code> agent using the options.</p>
+<pre><code language="language-bash" class="language-bash">./b7s --peer-db $PEER_DB \
+      --function-db $FUNCTION_DB \
+      --log-level debug \
+      --port $P2P_PORT \
+      --role head \
+      --workspace $WORKSPACE_ROOT \
+      --private-key $NODE_KEY_PATH \
+      --rest-api :$REST_API $dialback_args $bootnode_args
+</code></pre>
+<p>Make sure to set the environment variables like <code>P2P_PORT</code>,<code>REST_API</code>, <code>dialback_args</code>, <code>bootnode_args</code>, and replace <code>$NODE_KEY_PATH</code> and <code>$WORKSPACE_ROOT</code> with appropriate paths for your setup.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Run the Node in the Worker Node Configuration" duration="0">
+        <p>Set the required environment variables:</p>
+<ul>
+<li>P2P_PORT: This variable defines the port number for peer-to-peer communication. You can set it to any available port number.</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">export P2P_PORT=5000
+</code></pre>
+<ul>
+<li>REST_API: This variable determines the port number for the REST API. Choose an available port number for this purpose. If not provided, RPC will be disabled.</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">export REST_API=8080
+</code></pre>
+<ul>
+<li>$NODE_KEY_PATH: This is the path to your private key. Replace $NODE_KEY_PATH with the actual path. For instance:</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">export NODE_KEY_PATH=~/b7s/identity/priv.bin
+</code></pre>
+<ul>
+<li>$WORKSPACE_ROOT: This variable represents the root directory of your workspace. Replace $WORKSPACE_ROOT with the actual path. For example:</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">export WORKSPACE_ROOT=~/b7s/workspace
+</code></pre>
+<ul>
+<li>$PEER_DB: This variable represents the location to save the P2P Peer Registration Database.</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">export PEER_DB=~/b7s/function-db
+</code></pre>
+<ul>
+<li>$FUNCTION_DB: This variable represents the location to save the Function Deployment Database.</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">export FUNCTION_DB=~/b7s/function-db
+</code></pre>
+<p>Execute the <code>b7s</code> agent using the options.</p>
+<pre><code language="language-bash" class="language-bash">./b7s --peer-db $PEER_DB \
+      --function-db $FUNCTION_DB \
+      --log-level debug \
+      --port $P2P_PORT \
+      --role worker \
+      --workspace $WORKSPACE_ROOT \
+      --private-key $NODE_KEY_PATH \
+      --rest-api :$REST_API 
+      $dialback_args $bootnode_args
+</code></pre>
+<p>Make sure to set the environment variables like <code>P2P_PORT</code> <code>REST_API</code>, <code>dialback_args</code>, <code>bootnode_args</code>, and replace <code>$NODE_KEY_PATH</code> and <code>$WORKSPACE_ROOT</code> with appropriate paths for your setup.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Common Problems" duration="0">
+        <p>Incase you run into some issues during setup, we&#39;ve detailed some common problems that may happen.</p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>

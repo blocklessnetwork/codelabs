@@ -8,12 +8,12 @@ nodes = 1
 
 [build]
 dir = ".bls"
-public_dir = "public"
+public_dir = "docs"
 entry = "blockless-codelabs_debug.wasm"
 command = "npm run build"
 
 [build_release]
 dir = ".bls"
-public_dir = "public"
+public_dir = "docs"
 entry = "blockless-codelabs.wasm"
 command = "npm run build"

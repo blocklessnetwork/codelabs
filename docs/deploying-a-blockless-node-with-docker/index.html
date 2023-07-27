@@ -1,0 +1,102 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Deploying using Docker Image</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14" ga4id=""></google-codelab-analytics>
+  <google-codelab codelab-gaid="UA-123"
+                  codelab-ga4id=""
+                  id="deploying-a-blockless-node-with-docker"
+                  title="Deploying using Docker Image"
+                  environment="web"
+                  feedback-link="https://www.github.com/blocklessnetwork/b7s">
+    
+      <google-codelab-step label="Getting Started" duration="0">
+        
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Things You Will Need" duration="0">
+        <ul>
+<li>A machine running Docker.</li>
+<li>A valid AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY for an S3-compatible storage provider. These credentials will be used for backing up your node&#39;s keys and configuration.</li>
+<li>A valid KEY_PATH and KEY_PASSWORD for your S3-compatible storage provider. These credentials are used for backing up your node&#39;s keys and configuration.</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Step 1: Pull the Latest b7s Docker Image" duration="0">
+        <pre><code>docker pull ghcr.io/blocklessnetwork/b7s:v0.0.25
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Step 2: Run the Node in the Head Node Configuration" duration="0">
+        <pre><code>docker run -d --name b7s \
+    -e AWS_ACCESS_KEY_ID=&lt;YOUR_AWS_ACCESS_KEY_ID&gt; \
+    -e AWS_SECRET_ACCESS_KEY=&lt;YOUR_AWS_SECRET_ACCESS_KEY&gt; \
+    -e KEY_PATH=&lt;YOUR_S3_KEY_PATH&gt; \
+    -e KEY_PASSWORD=&lt;YOUR_S3_KEY_PASSWORD&gt; \
+    -e NODE_ROLE=head \
+    -e P2P_PORT=9527 \
+    -e REST_API=8081 \
+    -e DIALBACK_PORT=32342 \
+    -e DIALBACK_ADDRESS=1.1.1.1 \
+    -v /var/tmp/b7s/peerdb:/var/tmp/b7s/peerdb \
+    -v /var/tmp/b7s/function-db:/var/tmp/b7s/function-db \
+    -p 9527:9527 \
+    ghcr.io/blocklessnetwork/b7s:v0.0.25
+</code></pre>
+<p>Make sure to replace &lt;YOUR_AWS_ACCESS_KEY_ID&gt;, &lt;YOUR_AWS_SECRET_ACCESS_KEY&gt;, &lt;YOUR_S3_KEY_PATH&gt;, and &lt;YOUR_S3_KEY_PASSWORD&gt; with your actual credentials.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Step 3: Run the Node in the Worker Node Configuration" duration="0">
+        <pre><code>docker run -d --name b7s \
+    -e AWS_ACCESS_KEY_ID=&lt;YOUR_AWS_ACCESS_KEY_ID&gt; \
+    -e AWS_SECRET_ACCESS_KEY=&lt;YOUR_AWS_SECRET_ACCESS_KEY&gt; \
+    -e KEY_PATH=&lt;YOUR_S3_KEY_PATH&gt; \
+    -e KEY_PASSWORD=&lt;YOUR_S3_KEY_PASSWORD&gt; \
+    -e NODE_ROLE=worker \
+    -e P2P_PORT=9527 \
+    -v /var/tmp/b7s/peerdb:/var/tmp/b7s/peerdb \
+    -v /var/tmp/b7s/function-db:/var/tmp/b7s/function-db \
+    -p 9527:9527 \
+    ghcr.io/blocklessnetwork/b7s:v0.0.25
+</code></pre>
+<p>Again, remember to replace &lt;YOUR_AWS_ACCESS_KEY_ID&gt;, &lt;YOUR_AWS_SECRET_ACCESS_KEY&gt;, &lt;YOUR_S3_KEY_PATH&gt;, and &lt;YOUR_S3_KEY_PASSWORD&gt; with your actual credentials.</p>
+<p>Congratulations! You have successfully launched the b7s Docker image with either the Head Node or Worker Node Configuration. Your node is now up and running, ready to participate in the Blockless Network. Happy coding!</p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>

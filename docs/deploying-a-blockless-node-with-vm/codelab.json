@@ -1,0 +1,26 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2023-07-27T02:05:44Z",
+  "id": "deploying-a-blockless-node-with-vm",
+  "duration": 0,
+  "title": "Deploying using a Virtual Machine or on Bare Metal",
+  "summary": "Deploy and manage a Blockess Node using a VM or Bare",
+  "source": "./labs/deploying-a-blockless-node-using-vm/codelab.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "codelab",
+    "markdown"
+  ],
+  "tags": [
+    "web"
+  ],
+  "feedback": "https://www.github.com/blocklessnetwork/b7s",
+  "ga": "UA-123",
+  "url": "deploying-a-blockless-node-with-vm"
+}
