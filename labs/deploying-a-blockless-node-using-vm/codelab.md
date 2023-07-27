@@ -32,17 +32,6 @@ The latest version of the runtime can be found on github.
 
 * [runtime v0.0.15](https://github.com/blocklessnetwork/runtime/releases/tag/v0.0.15)
 
-<!-- ## Installing a Prebuilt Binary
-
-The installation is pretty simple. Place the binaries in a directory that the user account you plan to use to run the binary agent, has access to execute within. 
-
-Often placing them in `~/blockless` is enough. Ensure that the agents have been `chmod +x` on your system.
-
-```bash
-chmod +x b7s
-chmod +x blockless-cli
-``` -->
-
 ## Building the b7s Agent from Source
 
 To build the `b7s` repository you will need, you will also need to follow the <a href="./#3" target="_self" >Installing Binaries</a> step.
@@ -91,6 +80,25 @@ The release will now be available under `target/release/blockless-cli`.
 
 ## Installing Binaries
 
+Pick a location to move the binary files. This directory should be write, and execution accessible to the user who will be issuing the processes.
+
+* We recommend you use a normal user and not `root`. 
+* We recommend this folder is `chmod 755`, so only the user running the agent process and runtime have access to write to the folder.
+
+Here is an example of how we would accomplish this if we built the binaries from source.
+
+```bash
+mkdir ~/bls
+cp b7s/dist/b7s ~/bls 
+cp runtime/target/release/blockless-cli ~/bls
+chmod -R 755 ~/bls
+```
+
+* `~/bls` directory was created
+* we copied `b7s` and `blockless-cli` into `~/bls`
+* we ensured the user can execute and write to the directory
+
+**if you downloaded zip files, substitute the paths for the folder in which you decompressed the archives. ~/Downloads/b7s-os.arch**
 
 ## Configuration and Setup
 
