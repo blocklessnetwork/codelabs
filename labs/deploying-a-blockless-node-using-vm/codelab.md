@@ -157,6 +157,11 @@ export PEER_DB=~/b7s/function-db
 ```bash
 export FUNCTION_DB=~/b7s/function-db
 ```
+- $BOOT_NODES: This variable represents a list of P2P addresses to bootstrap into a network
+
+```bash
+export BOOT_NODES=/ip4/159.89.90.90/tcp/32342/p2p/12D3KooWKTKwW1y6iRoGeag1y2wpNYV9UM8QaYXaTL7DUTZdEFw6,/ip4/65.108.6.185/tcp/30151/p2p/12D3KooWH7TiTXb4UzKKU5zMkCDSMx5KAwP4waBbknxnoXfWL7Db
+```
 
 Execute the `b7s` agent using the options. 
 
@@ -168,10 +173,17 @@ Execute the `b7s` agent using the options.
       --role head \
       --workspace $WORKSPACE_ROOT \
       --private-key $NODE_KEY_PATH \
-      --rest-api :$REST_API $dialback_args $bootnode_args
+      --rest-api :$REST_API \
+      --boot-nodes $BOOT_NODES
 ```
 
 Make sure to set the environment variables like `P2P_PORT`,`REST_API`, `dialback_args`, `bootnode_args`, and replace `$NODE_KEY_PATH` and `$WORKSPACE_ROOT` with appropriate paths for your setup.
+
+Optionals. In some instances it's possible that you are behind a firewall, and need to specify either an inbound port, or potentially an inbound IP Address. Both of these can be provided using two additional flags
+
+```bash
+--dialback-address $DIALBACK_ADDRESS --dialback-port $DIALBACK_PORT
+```
 
 ## Run the Node in the Worker Node Configuration
 
@@ -211,6 +223,12 @@ export PEER_DB=~/b7s/function-db
 export FUNCTION_DB=~/b7s/function-db
 ```
 
+- $BOOT_NODES: This variable represents a list of P2P addresses to bootstrap into a network
+
+```bash
+export BOOT_NODES=/ip4/159.89.90.90/tcp/32342/p2p/12D3KooWKTKwW1y6iRoGeag1y2wpNYV9UM8QaYXaTL7DUTZdEFw6,/ip4/65.108.6.185/tcp/30151/p2p/12D3KooWH7TiTXb4UzKKU5zMkCDSMx5KAwP4waBbknxnoXfWL7Db
+```
+
 Execute the `b7s` agent using the options. 
 
 ```bash
@@ -221,11 +239,17 @@ Execute the `b7s` agent using the options.
       --role worker \
       --workspace $WORKSPACE_ROOT \
       --private-key $NODE_KEY_PATH \
-      --rest-api :$REST_API 
-      $dialback_args $bootnode_args
+      --rest-api :$REST_API \
+      --boot-nodes $BOOT_NODES
 ```
 
 Make sure to set the environment variables like `P2P_PORT` `REST_API`, `dialback_args`, `bootnode_args`, and replace `$NODE_KEY_PATH` and `$WORKSPACE_ROOT` with appropriate paths for your setup.
+
+Optionals. In some instances it's possible that you are behind a firewall, and need to specify either an inbound port, or potentially an inbound IP Address. Both of these can be provided using two additional flags
+
+```bash
+--dialback-address $DIALBACK_ADDRESS --dialback-port $DIALBACK_PORT
+```
 
 ## Common Problems
 

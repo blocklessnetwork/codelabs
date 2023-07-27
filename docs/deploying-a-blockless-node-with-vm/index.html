@@ -157,6 +157,11 @@ cd identity
 </ul>
 <pre><code language="language-bash" class="language-bash">export FUNCTION_DB=~/b7s/function-db
 </code></pre>
+<ul>
+<li>$BOOT_NODES: This variable represents a list of P2P addresses to bootstrap into a network</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">export BOOT_NODES=/ip4/159.89.90.90/tcp/32342/p2p/12D3KooWKTKwW1y6iRoGeag1y2wpNYV9UM8QaYXaTL7DUTZdEFw6,/ip4/65.108.6.185/tcp/30151/p2p/12D3KooWH7TiTXb4UzKKU5zMkCDSMx5KAwP4waBbknxnoXfWL7Db
+</code></pre>
 <p>Execute the <code>b7s</code> agent using the options.</p>
 <pre><code language="language-bash" class="language-bash">./b7s --peer-db $PEER_DB \
       --function-db $FUNCTION_DB \
@@ -165,9 +170,13 @@ cd identity
       --role head \
       --workspace $WORKSPACE_ROOT \
       --private-key $NODE_KEY_PATH \
-      --rest-api :$REST_API $dialback_args $bootnode_args
+      --rest-api :$REST_API \
+      --boot-nodes $BOOT_NODES
 </code></pre>
 <p>Make sure to set the environment variables like <code>P2P_PORT</code>,<code>REST_API</code>, <code>dialback_args</code>, <code>bootnode_args</code>, and replace <code>$NODE_KEY_PATH</code> and <code>$WORKSPACE_ROOT</code> with appropriate paths for your setup.</p>
+<p>Optionals. In some instances it&#39;s possible that you are behind a firewall, and need to specify either an inbound port, or potentially an inbound IP Address. Both of these can be provided using two additional flags</p>
+<pre><code language="language-bash" class="language-bash">--dialback-address $DIALBACK_ADDRESS --dialback-port $DIALBACK_PORT
+</code></pre>
 
 
       </google-codelab-step>
@@ -204,6 +213,11 @@ cd identity
 </ul>
 <pre><code language="language-bash" class="language-bash">export FUNCTION_DB=~/b7s/function-db
 </code></pre>
+<ul>
+<li>$BOOT_NODES: This variable represents a list of P2P addresses to bootstrap into a network</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">export BOOT_NODES=/ip4/159.89.90.90/tcp/32342/p2p/12D3KooWKTKwW1y6iRoGeag1y2wpNYV9UM8QaYXaTL7DUTZdEFw6,/ip4/65.108.6.185/tcp/30151/p2p/12D3KooWH7TiTXb4UzKKU5zMkCDSMx5KAwP4waBbknxnoXfWL7Db
+</code></pre>
 <p>Execute the <code>b7s</code> agent using the options.</p>
 <pre><code language="language-bash" class="language-bash">./b7s --peer-db $PEER_DB \
       --function-db $FUNCTION_DB \
@@ -212,10 +226,13 @@ cd identity
       --role worker \
       --workspace $WORKSPACE_ROOT \
       --private-key $NODE_KEY_PATH \
-      --rest-api :$REST_API 
-      $dialback_args $bootnode_args
+      --rest-api :$REST_API \
+      --boot-nodes $BOOT_NODES
 </code></pre>
 <p>Make sure to set the environment variables like <code>P2P_PORT</code> <code>REST_API</code>, <code>dialback_args</code>, <code>bootnode_args</code>, and replace <code>$NODE_KEY_PATH</code> and <code>$WORKSPACE_ROOT</code> with appropriate paths for your setup.</p>
+<p>Optionals. In some instances it&#39;s possible that you are behind a firewall, and need to specify either an inbound port, or potentially an inbound IP Address. Both of these can be provided using two additional flags</p>
+<pre><code language="language-bash" class="language-bash">--dialback-address $DIALBACK_ADDRESS --dialback-port $DIALBACK_PORT
+</code></pre>
 
 
       </google-codelab-step>
