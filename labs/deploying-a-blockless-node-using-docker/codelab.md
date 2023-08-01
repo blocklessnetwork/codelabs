@@ -37,17 +37,7 @@ export P2P_PORT=5000
 ```bash
 export REST_API=8080
 ```
-- $PEER_DB: This variable represents the location to save the P2P Peer Registration Database.
 
-```bash
-export PEER_DB=~/b7s/function-db
-```
-
-- $FUNCTION_DB: This variable represents the location to save the Function Deployment Database.
-
-```bash
-export FUNCTION_DB=~/b7s/function-db
-```
 - $BOOT_NODES: This variable represents a list of P2P addresses to bootstrap into a network
 
 ```bash
@@ -84,18 +74,6 @@ Set the required environment variables:
 - P2P_PORT: This variable defines the port number for peer-to-peer communication. You can set it to any available port number.
 ```bash
 export P2P_PORT=5000
-```
-
-- $PEER_DB: This variable represents the location to save the P2P Peer Registration Database.
-
-```bash
-export PEER_DB=~/b7s/function-db
-```
-
-- $FUNCTION_DB: This variable represents the location to save the Function Deployment Database.
-
-```bash
-export FUNCTION_DB=~/b7s/function-db
 ```
 
 - $BOOT_NODES: This variable represents a list of P2P addresses to bootstrap into a network

@@ -3,7 +3,7 @@
   "format": "html",
   "prefix": "https://storage.googleapis.com",
   "mainga": "UA-49880327-14",
-  "updated": "2023-08-01T05:15:08Z",
+  "updated": "2023-08-01T06:11:30Z",
   "id": "deploying-a-blockless-node-with-docker",
   "duration": 0,
   "title": "Deploying using Docker Image",
