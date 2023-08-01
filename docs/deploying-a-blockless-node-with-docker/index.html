@@ -28,17 +28,14 @@
                   environment="web"
                   feedback-link="https://www.github.com/blocklessnetwork/b7s">
     
-      <google-codelab-step label="Getting Started" duration="0">
-        
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Things You Will Need" duration="0">
-        <ul>
-<li>A machine running Docker.</li>
+      <google-codelab-step label="Prerequisite" duration="0">
+        <p>You should already have a machine running <a href="https://www.docker.com/products/docker-desktop/" target="_blank">Docker</a>.</p>
+<p>You should have:</p>
+<ul>
 <li>A valid AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY for an S3-compatible storage provider. These credentials will be used for backing up your node&#39;s keys and configuration.</li>
 <li>A valid KEY_PATH and KEY_PASSWORD for your S3-compatible storage provider. These credentials are used for backing up your node&#39;s keys and configuration.</li>
 </ul>
+<p>If you do not currently have an S3 compatible file host, we recommend you use <a href="https://filebase.com/" target="_blank">Filebase</a> to get an S3 compatible storage option that uses Blockchain compatible storage options.</p>
 
 
       </google-codelab-step>
@@ -51,7 +48,33 @@
       </google-codelab-step>
     
       <google-codelab-step label="Step 2: Run the Node in the Head Node Configuration" duration="0">
-        <pre><code>docker run -d --name b7s \
+        <ul>
+<li>P2P_PORT: This variable defines the port number for peer-to-peer communication. You can set it to any available port number.</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">export P2P_PORT=5000
+</code></pre>
+<ul>
+<li>REST_API: This variable determines the port number for the REST API. Choose an available port number for this purpose. If not provided, RPC will be disabled.</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">export REST_API=8080
+</code></pre>
+<ul>
+<li>$PEER_DB: This variable represents the location to save the P2P Peer Registration Database.</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">export PEER_DB=~/b7s/function-db
+</code></pre>
+<ul>
+<li>$FUNCTION_DB: This variable represents the location to save the Function Deployment Database.</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">export FUNCTION_DB=~/b7s/function-db
+</code></pre>
+<ul>
+<li>$BOOT_NODES: This variable represents a list of P2P addresses to bootstrap into a network</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">export BOOT_NODES=/ip4/159.89.90.90/tcp/32342/p2p/12D3KooWKTKwW1y6iRoGeag1y2wpNYV9UM8QaYXaTL7DUTZdEFw6,/ip4/65.108.6.185/tcp/30151/p2p/12D3KooWH7TiTXb4UzKKU5zMkCDSMx5KAwP4waBbknxnoXfWL7Db
+</code></pre>
+<p>Execute the <code>b7s</code> agent using docker run, passing in the environment the options.</p>
+<pre><code language="language-bash" class="language-bash">docker run -d --name b7s \
     -e AWS_ACCESS_KEY_ID=&lt;YOUR_AWS_ACCESS_KEY_ID&gt; \
     -e AWS_SECRET_ACCESS_KEY=&lt;YOUR_AWS_SECRET_ACCESS_KEY&gt; \
     -e KEY_PATH=&lt;YOUR_S3_KEY_PATH&gt; \
@@ -59,32 +82,58 @@
     -e NODE_ROLE=head \
     -e P2P_PORT=9527 \
     -e REST_API=8081 \
-    -e DIALBACK_PORT=32342 \
-    -e DIALBACK_ADDRESS=1.1.1.1 \
-    -v /var/tmp/b7s/peerdb:/var/tmp/b7s/peerdb \
-    -v /var/tmp/b7s/function-db:/var/tmp/b7s/function-db \
     -p 9527:9527 \
     ghcr.io/blocklessnetwork/b7s:v0.0.25
+``
+
+
+Optional Dialback can be passed through. In a case where the inbound address and port may differ from the one available to the container.
+
+```bash
+    -e DIALBACK_PORT=32342 \
+    -e DIALBACK_ADDRESS=159.89.90.90 \
 </code></pre>
-<p>Make sure to replace &lt;YOUR_AWS_ACCESS_KEY_ID&gt;, &lt;YOUR_AWS_SECRET_ACCESS_KEY&gt;, &lt;YOUR_S3_KEY_PATH&gt;, and &lt;YOUR_S3_KEY_PASSWORD&gt; with your actual credentials.</p>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="Step 3: Run the Node in the Worker Node Configuration" duration="0">
-        <pre><code>docker run -d --name b7s \
+        <p>Set the required environment variables:</p>
+<ul>
+<li>P2P_PORT: This variable defines the port number for peer-to-peer communication. You can set it to any available port number.</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">export P2P_PORT=5000
+</code></pre>
+<ul>
+<li>$PEER_DB: This variable represents the location to save the P2P Peer Registration Database.</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">export PEER_DB=~/b7s/function-db
+</code></pre>
+<ul>
+<li>$FUNCTION_DB: This variable represents the location to save the Function Deployment Database.</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">export FUNCTION_DB=~/b7s/function-db
+</code></pre>
+<ul>
+<li>$BOOT_NODES: This variable represents a list of P2P addresses to bootstrap into a network</li>
+</ul>
+<pre><code language="language-bash" class="language-bash">export BOOT_NODES=/ip4/159.89.90.90/tcp/32342/p2p/12D3KooWKTKwW1y6iRoGeag1y2wpNYV9UM8QaYXaTL7DUTZdEFw6,/ip4/65.108.6.185/tcp/30151/p2p/12D3KooWH7TiTXb4UzKKU5zMkCDSMx5KAwP4waBbknxnoXfWL7Db
+</code></pre>
+<p>Execute the <code>b7s</code> agent using docker run, passing in the environment the options.</p>
+<pre><code language="language-bash" class="language-bash">docker run -d --name b7s \
     -e AWS_ACCESS_KEY_ID=&lt;YOUR_AWS_ACCESS_KEY_ID&gt; \
     -e AWS_SECRET_ACCESS_KEY=&lt;YOUR_AWS_SECRET_ACCESS_KEY&gt; \
     -e KEY_PATH=&lt;YOUR_S3_KEY_PATH&gt; \
     -e KEY_PASSWORD=&lt;YOUR_S3_KEY_PASSWORD&gt; \
     -e NODE_ROLE=worker \
-    -e P2P_PORT=9527 \
-    -v /var/tmp/b7s/peerdb:/var/tmp/b7s/peerdb \
-    -v /var/tmp/b7s/function-db:/var/tmp/b7s/function-db \
+    -e P2P_PORT=$P2P_PORT \
     -p 9527:9527 \
     ghcr.io/blocklessnetwork/b7s:v0.0.25
 </code></pre>
-<p>Again, remember to replace &lt;YOUR_AWS_ACCESS_KEY_ID&gt;, &lt;YOUR_AWS_SECRET_ACCESS_KEY&gt;, &lt;YOUR_S3_KEY_PATH&gt;, and &lt;YOUR_S3_KEY_PASSWORD&gt; with your actual credentials.</p>
+<p>Optional Dialback can be passed through. In a case where the inbound address and port may differ from the one available to the container.</p>
+<pre><code language="language-bash" class="language-bash">    -e DIALBACK_PORT=32342 \
+    -e DIALBACK_ADDRESS=159.89.90.90 \
+</code></pre>
 <p>Congratulations! You have successfully launched the b7s Docker image with either the Head Node or Worker Node Configuration. Your node is now up and running, ready to participate in the Blockless Network. Happy coding!</p>
 
 
